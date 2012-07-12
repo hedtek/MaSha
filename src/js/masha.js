@@ -51,22 +51,6 @@ MaSha.defaultOptions = {
     'location': new LocationHandler(),
     'validate': false,
     'enableHaschange': false,
-    'onHashRead': function(){
-        var elem = firstWithClass(this.selectable, 'user_selection_true');
-        if(elem && !this.hashWasRead) {
-            this.hashWasRead = true;
-            window.setTimeout(function(){
-                var x = 0, y = 0;
-                while(elem){
-                    x += elem.offsetLeft;
-                    y += elem.offsetTop;
-                    elem = elem.offsetParent;
-                }
-         
-                window.scrollTo(x,y-150);
-            }, 1);
-        }
-    },
     'isBlock': function(el){
       return el.nodeName == 'BR' || inArray(getCompiledStyle(el, 'display'),
                                                ['inline', 'none']) == -1;
@@ -302,10 +286,6 @@ MaSha.prototype = {
             this.deserializeSelection(hashAr[i]);
         }
         this.updateHash();
-
-        if (this.options.onHashRead){
-            this.options.onHashRead.call(this);
-        }
     },
 
     splittedHash: function(){
