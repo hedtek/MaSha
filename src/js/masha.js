@@ -951,10 +951,10 @@ Range.prototype.wrapSelection = function(className){
 window.MaSha = MaSha;
 
 if (window.jQuery){
-    window.jQuery.fn.masha = function(options) {
+    window.jQuery.fn.masha = function(data, options) {
         options = options || {};
         options = extend({'selectable': this[0]}, options);
-        return new MaSha(options);
+        return new MaSha(data, options);
     };
 }
 
