@@ -126,7 +126,9 @@ MaSha.prototype = {
 
                 var markerCoord = getPageXY(e); // outside timeout function because of IE
                 window.setTimeout(function(){
+                    // Bypassing the marker button click behaviour, which is not needed
                     this_.showMarker(markerCoord);
+                    this_.markerClickHandler();
                 }, 1);
             });
         } else {
@@ -140,23 +142,17 @@ MaSha.prototype = {
                         var markerCoord = {x: rect.left + rect.width + document.body.scrollLeft,
                                            y: rect.top + rect.height/2 + document.body.scrollTop};
                         }
+
+                        // Bypassing the marker button click behaviour, which is not needed
                         this_.showMarker(markerCoord);
+                        this_.markerClickHandler();
                     }
                 }, 1);
             });
         }
 
-        function markerClick(e){
-            preventDefault(e);
-            stopEvent(e);
+        this.markerClickHandler = function(){
 
-            var target = (e.target || e.srcElement);
-
-            if (hasClass(this, 'masha-marker-bar')){
-                if (!hasClass(target, 'masha-social') && !hasClass(target, 'masha-marker')){
-                    return;
-                }
-            }
             removeClass(this_.marker, 'show');
             if (!this_.rangeIsSelectable()){
                 return;
@@ -171,6 +167,23 @@ MaSha.prototype = {
             if (this_.options.selectMessage){
                 this_._showMessage();
             }
+
+
+        }
+
+        function markerClick(e){
+            preventDefault(e);
+            stopEvent(e);
+
+            var target = (e.target || e.srcElement);
+
+            if (hasClass(this, 'masha-marker-bar')){
+                if (!hasClass(target, 'masha-social') && !hasClass(target, 'masha-marker')){
+                    return;
+                }
+            }
+
+            this_.markerClickHandler();
 
             if (hasClass(target, 'masha-social') ){
                 var pattern = target.getAttribute('data-pattern');
@@ -252,9 +265,9 @@ MaSha.prototype = {
 
         var coords = this.getMarkerCoords(this.marker, markerCoord);
 
-        this.marker.style.top = coords.y + 'px';
-        this.marker.style.left = coords.x + 'px';
-        addClass(this.marker, 'show');
+        //this.marker.style.top = coords.y + 'px';
+        //this.marker.style.left = coords.x + 'px';
+        //addClass(this.marker, 'show');
     },
 
 
