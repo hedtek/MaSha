@@ -94,35 +94,16 @@ MaSha.prototype = {
     
         // enumerate block elements containing a text
         this.enumerateElements();
-    
 
 
-        var hasTouch = ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch; // from modernizr
-
-        if(!hasTouch){
-            addEvent(this.selectable, 'mouseup', function(e) {
-                /*
-                 * Handler for Mouse up on selection
-                 */
-
-
-                window.setTimeout(function(){
-                    this_.afterSelectHandler();
-                }, 1);
-            });
-        } else {
-            addEvent(this.selectableselectable, 'touchend', function(){
-                window.setTimeout(function(){
-                    var s = window.getSelection();
-                    if(s.rangeCount){
-                        var rects = s.getRangeAt(0).getClientRects();
-                        var rect = rects[rects.length - 1];
-
-                        this_.afterSelectHandler();
-                    }
-                }, 1);
-            });
-        }
+        /*
+         * Handler for Mouse up on selection
+         */
+        addEvent(this.selectable, 'mouseup', function(e) {
+            window.setTimeout(function(){
+                this_.afterSelectHandler();
+            }, 1);
+        });
 
         this.afterSelectHandler = function(){
             var regexp = new RegExp(this_.options.regexp, 'g');
