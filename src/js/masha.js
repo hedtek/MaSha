@@ -51,8 +51,6 @@ MaSha.defaultOptions = {
     'location': new LocationHandler(),
     'validate': false,
     'enableHaschange': false,
-    'onMark': null,
-    'onUnmark': null,
     'onHashRead': function(){
         var elem = firstWithClass(this.selectable, 'user_selection_true');
         if(elem && !this.hashWasRead) {
@@ -138,13 +136,6 @@ MaSha.prototype = {
 
             this_.addSelection();
             this_.updateHash();
-
-            if (this_.options.onMark){
-                this_.options.onMark.call(this_);
-            }
-
-
-
         }
 
         if(this.options.enableHaschange){
