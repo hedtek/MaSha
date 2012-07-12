@@ -166,9 +166,6 @@ MaSha.prototype = {
     /*
      * Interface functions, safe to redefine
      */
-    openShareWindow: function(url){
-        window.open(url, '', 'status=no,toolbar=no,menubar=no,width=800,height=400');
-    },
     getPositionChecksum: function(wordsIterator){
         /*
          * Used in validation. This method accepts word sequence iterator (a function returning 
