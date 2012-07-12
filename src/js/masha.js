@@ -25,7 +25,6 @@ LocationHandler.prototype = {
 var MaSha = function(options) {
     options = options || {};
 
-    if ('select_message' in options){ options.selectMessage = options.select_message}
     if ('enable_haschange' in options){ options.enableHaschange = options.enable_haschange}
     if ('is_block' in options){ options.isBlock = options.is_block}
 
@@ -50,7 +49,6 @@ MaSha.defaultOptions = {
     'selectable': 'selectable-content',
     'marker': 'txtselect_marker',
     'ignored': null,
-    'selectMessage': null,
     'location': new LocationHandler(),
     'validate': false,
     'enableHaschange': false,
@@ -106,9 +104,6 @@ MaSha.prototype = {
 
         this.isIgnored = this.constructIgnored(this.options.ignored);
     
-        if (this.options.selectMessage){
-            this.initMessage();
-        }
         //cleanWhitespace(this.selectable);
     
         // enumerate block elements containing a text
@@ -164,9 +159,7 @@ MaSha.prototype = {
             if (this_.options.onMark){
                 this_.options.onMark.call(this_);
             }
-            if (this_.options.selectMessage){
-                this_._showMessage();
-            }
+
 
 
         }
@@ -998,74 +991,6 @@ MaSha.prototype = {
                     reg.exec(last_selection.className)[1]);
         }
         return true;
-    },
-
-    /*
-     * message.js - popup message
-     */
-    initMessage: function() {
-        var this_ = this;
-
-        this.msg = (typeof this.options.selectMessage == 'string'?
-                    document.getElementById(this.options.selectMessage):
-                    this.options.selectMessage);
-        this.close_button = this.getCloseButton();
-        this.msg_autoclose = null;
-
-        addEvent(this.close_button, 'click', function(e){
-            preventDefault(e);
-            this_.hideMessage();
-            this_.saveMessageClosed();
-            clearTimeout(this_.msg_autoclose);
-        });
-    },
-
-    /* 
-     * message.js pubplic methods, safe to redefine
-     */
-
-    showMessage: function(){
-        addClass(this.msg, 'show');
-    },
-    hideMessage: function(){
-        removeClass(this.msg, 'show');
-    },
-    getCloseButton: function(){
-        return this.msg.getElementsByTagName('a')[0];
-    },
-
-    /*
-     * non-public functions
-     */
-
-    getMessageClosed: function(){
-        if (window.localStorage){
-            return !!localStorage.masha_warning;
-        } else {
-            return !!document.cookie.match(/(?:^|;)\s*masha-warning=/);
-        }
-    },
-    saveMessageClosed: function(){
-        if (window.localStorage){
-            localStorage.masha_warning = 'true';
-        } else {
-            // XXX need to be tested under IE
-            if (!this.getMessageClosed()){
-                document.cookie += '; masha-warning=true';
-            }
-        }
-    },
-
-    _showMessage: function(){
-        var this_ = this;
-        if (this.getMessageClosed()) return;
-    
-        this.showMessage();
-    
-        clearTimeout(this.msg_autoclose);
-        this.msg_autoclose = setTimeout(function(){
-            this_.hideMessage();
-        }, 10000);
     }
 
 };
