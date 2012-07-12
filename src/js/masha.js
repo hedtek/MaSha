@@ -8,20 +8,6 @@
 
 (function(){
 
-var LocationHandler = function() {}
-
-LocationHandler.prototype = {
-    setHash: function(hash) {
-        window.location.hash = hash;
-    },
-    getHash: function() {
-        return window.location.hash;
-    },
-    addHashchange: function(delegate) {
-        addEvent(window, 'hashchange', delegate);
-    }
-};
-
 var MaSha = function(data, options) {
     this.data = data;
 
@@ -43,13 +29,11 @@ var MaSha = function(data, options) {
 };
 
 MaSha.version = "22.05.2012-12:08:33"; // filled automatically by hook
-MaSha.LocationHandler = LocationHandler;
 
 MaSha.defaultOptions = {
     'regexp': "[^\\s,;:\u2013.!?<>\u2026\\n\u00a0\\*]+",
     'selectable': 'selectable-content',
     'ignored': null,
-    'location': new LocationHandler(),
     'validate': false,
     'isBlock': function(el){
       return el.nodeName == 'BR' || inArray(getCompiledStyle(el, 'display'),
