@@ -47,7 +47,6 @@ MaSha.LocationHandler = LocationHandler;
 MaSha.defaultOptions = {
     'regexp': "[^\\s,;:\u2013.!?<>\u2026\\n\u00a0\\*]+",
     'selectable': 'selectable-content',
-    'marker': 'txtselect_marker',
     'ignored': null,
     'location': new LocationHandler(),
     'validate': false,
@@ -81,17 +80,6 @@ MaSha.prototype = {
         this.selectable = (typeof this.options.selectable == 'string'?
                              document.getElementById(this.options.selectable):
                              this.options.selectable);
-        if (typeof this.options.marker == 'string'){
-            this.marker = document.getElementById(this.options.marker);
-            if (this.marker === null){
-                this.marker = document.createElement('a');
-                this.marker.setAttribute('id', this.options.marker);
-                this.marker.setAttribute('href', '#');
-                document.body.appendChild(this.marker);
-            }
-        } else {
-            this.marker = this.options.marker;
-        }
 
         if (typeof this.options.regexp != 'string'){
             throw 'regexp is set as string';
@@ -116,39 +104,34 @@ MaSha.prototype = {
         if(!hasTouch){
             addEvent(this.selectable, 'mouseup', function(e) {
                 /*
-                 * Show the marker if any text selected
+                 * Handler for Mouse up on selection
                  */
 
-                var markerCoord = getPageXY(e); // outside timeout function because of IE
+
                 window.setTimeout(function(){
-                    // Bypassing the marker button click behaviour, which is not needed
-                    this_.showMarker(markerCoord);
-                    this_.markerClickHandler();
+                    this_.afterSelectHandler();
                 }, 1);
             });
         } else {
-            addEvent(this.selectable, 'touchend', function(){
+            addEvent(this.selectableselectable, 'touchend', function(){
                 window.setTimeout(function(){
                     var s = window.getSelection();
                     if(s.rangeCount){
                         var rects = s.getRangeAt(0).getClientRects();
                         var rect = rects[rects.length - 1];
-                        if(rect){
-                        var markerCoord = {x: rect.left + rect.width + document.body.scrollLeft,
-                                           y: rect.top + rect.height/2 + document.body.scrollTop};
-                        }
 
-                        // Bypassing the marker button click behaviour, which is not needed
-                        this_.showMarker(markerCoord);
-                        this_.markerClickHandler();
+                        this_.afterSelectHandler();
                     }
                 }, 1);
             });
         }
 
-        this.markerClickHandler = function(){
+        this.afterSelectHandler = function(){
+            var regexp = new RegExp(this_.options.regexp, 'g');
+            var text = window.getSelection().toString();
 
-            removeClass(this_.marker, 'show');
+            if (text == '' || !regexp.test(text)) return;
+
             if (!this_.rangeIsSelectable()){
                 return;
             }
@@ -163,39 +146,6 @@ MaSha.prototype = {
 
 
         }
-
-        function markerClick(e){
-            preventDefault(e);
-            stopEvent(e);
-
-            var target = (e.target || e.srcElement);
-
-            if (hasClass(this, 'masha-marker-bar')){
-                if (!hasClass(target, 'masha-social') && !hasClass(target, 'masha-marker')){
-                    return;
-                }
-            }
-
-            this_.markerClickHandler();
-
-            if (hasClass(target, 'masha-social') ){
-                var pattern = target.getAttribute('data-pattern');
-                if (pattern){
-                    var new_url = pattern.replace('{url}', encodeURIComponent(window.location.toString()));
-                    this_.openShareWindow(new_url);
-                }
-            }
-        }
-    
-        addEvent(this.marker, 'click', markerClick);
-        addEvent(this.marker, 'touchend', markerClick);
-
-        addEvent(document, 'click', function(e){
-            var target = e.target || e.srcElement;
-            if (target != this_.marker) {
-                removeClass(this_.marker, 'show');
-            }
-        });
 
         if(this.options.enableHaschange){
             this.options.location.addHashchange(function(){
@@ -219,9 +169,6 @@ MaSha.prototype = {
     openShareWindow: function(url){
         window.open(url, '', 'status=no,toolbar=no,menubar=no,width=800,height=400');
     },
-    getMarkerCoords: function(marker, markerCoord){
-        return {'x': markerCoord.x + 5, 'y':markerCoord.y - 33};
-    },
     getPositionChecksum: function(wordsIterator){
         /*
          * Used in validation. This method accepts word sequence iterator (a function returning 
@@ -244,25 +191,6 @@ MaSha.prototype = {
         }
         return sum;
     },
-
-    /*
-     * Non-interface functions
-     */
-
-    showMarker: function(markerCoord){
-        var regexp = new RegExp(this.options.regexp, 'g');
-        var text = window.getSelection().toString();
-
-        if (text == '' || !regexp.test(text)) return;
-        if (!this.rangeIsSelectable()) return;
-
-        var coords = this.getMarkerCoords(this.marker, markerCoord);
-
-        //this.marker.style.top = coords.y + 'px';
-        //this.marker.style.left = coords.x + 'px';
-        //addClass(this.marker, 'show');
-    },
-
 
     // XXX sort methods logically
     deleteSelections: function(numclasses){
