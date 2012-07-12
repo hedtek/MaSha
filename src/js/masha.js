@@ -23,6 +23,8 @@ LocationHandler.prototype = {
 };
 
 var MaSha = function(data, options) {
+    this.data = data;
+
     options = options || {};
 
     if ('is_block' in options){ options.isBlock = options.is_block}
@@ -91,10 +93,9 @@ MaSha.prototype = {
             if (!this_.getSelection()) return;
 
             this_.addSelection();
-            this_.updateHash();
         }
 
-        this.readHash();
+        this.layout();
     },
 
     /*
@@ -249,42 +250,18 @@ MaSha.prototype = {
         return _count;
     }, 
 
-    updateHash: function(){
-        var hashAr = [];
-        
-        for (key in this.ranges) { 
-            hashAr.push(this.ranges[key]);
-        }
-        var newHash = '#sel='+hashAr.join(';');
-        this.lastHash = newHash;
-        this.options.location.setHash(newHash);
-    },
-
-    readHash: function(){
+    layout: function(){
         /*
          * Reads Hash from URL and marks texts
          */
-        var hashAr = this.splittedHash();
+        var hashAr = this.data;
         if (!hashAr){ return; }
     
         for (var i=0; i < hashAr.length; i++) {
             this.deserializeSelection(hashAr[i]);
         }
-        this.updateHash();
     },
 
-    splittedHash: function(){
-        var hash = this.options.location.getHash();
-        if (!hash) return null;
-    
-        hash = hash.replace(/^#/, '').replace(/;+$/, '');
-        //
-        var pair = '';
-        if(! /^sel\=(?:\d+\:\d+(?:\:[^:;]*)?\,|%2C\d+\:\d+(?:\:[^:;]*)?;)*\d+\:\d+(?:\:[^:;]*)?\,|%2C\d+\:\d+(?:\:[^:;]*)?$/.test(hash)) return null;
-
-        hash = hash.substring(4, hash.length);
-        return hash.split(';');
-    },
 
     deserializeSelection: function(serialized) {
         var sel = window.getSelection();
@@ -639,6 +616,7 @@ MaSha.prototype = {
 
 
         var class_name = 'num'+this.counter;
+
         // generating hash part for this range
         this.ranges[class_name] = this.serializeRange(range);
 
