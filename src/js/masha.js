@@ -720,21 +720,31 @@ MaSha.prototype = {
         // Add highlight on mouse over on anchor
         var wrappers = byClassName(this.selectable, class_name);
         addEvent(closer_span, 'mouseover', function(){
-                for (var i=wrappers.length;i--;){
-                    addClass(wrappers[i], 'highlight');
-                }
+            this_.highlightSelection(class_name);
         });
 
         addEvent(closer_span, 'mouseout', function(){
-            for (var i=wrappers.length;i--;){
-                removeClass(wrappers[i], 'highlight');
-            }
+            this_.unhighlightSelection(class_name);
         });
 
         wrappers[wrappers.length-1].appendChild(closer_span);
     
         this.counter++;
         window.getSelection().removeAllRanges();
+    },
+
+    highlightSelection: function(class_name){
+        var wrappers = byClassName(this.selectable, class_name);
+        for (var i=wrappers.length;i--;){
+            addClass(wrappers[i], 'highlight');
+        }
+    },
+
+    unhighlightSelection: function(class_name){
+        var wrappers = byClassName(this.selectable, class_name);
+        for (var i=wrappers.length;i--;){
+            removeClass(    wrappers[i], 'highlight');
+        }
     },
 
     getFirstRange: function(){
