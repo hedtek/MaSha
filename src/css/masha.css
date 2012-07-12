@@ -90,23 +90,22 @@
     padding: 2px 0;
     }
 .user_selection a.txtsel_close, .user_selection_true a.txtsel_close {
-    display:none;
+    display:inline-block;
     }
 .user_selection .closewrap, .user_selection_true .closewrap {
-    position: relative;
+    display:inline-block;
     }
-.user_selection.hover a.txtsel_close, .user_selection_true.hover a.txtsel_close {
+.user_selection a.txtsel_close, .user_selection_true a.txtsel_close {
     display: inline-block;
-    position: absolute;
-    top: -7px;
-    left: -5px;
-    width: 33px;
-    height: 33px;
-    background: url(../img/textselect/closemarker.png) -0px -0px no-repeat;
+    width: 1em;
+    height: 1em;
+    border: 2px solid #ccc;
+    background: #ccc;
+    vertical-align: text-bottom;
     }
-    .user_selection.hover a.txtsel_close:hover, .user_selection_true.hover a.txtsel_close:hover {
-        background-position: -0px -33px;
-        }
+.user_selection a.txtsel_close:hover, .user_selection_true a.txtsel_close:hover {
+
+}
         
 #upmsg-selectable {
     position: fixed;
