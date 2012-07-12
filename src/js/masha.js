@@ -1196,69 +1196,6 @@ Range.prototype.wrapSelection = function(className){
     }
 };
 
-/* 
- * MaSha Multi 
- */
-// XXX here on in separate file?
-
-var MultiLocationHandler = function(prefix) {
-    this.prefix = prefix;
-};
-
-MultiLocationHandler.prototype = {
-    setHash: function(hash) {
-        hash = hash.replace('sel', this.prefix).replace(/^#/, '');
-
-        if (hash.length == this.prefix.length + 1){ hash = '' }
-
-        var old_hash = this.getHashPart();
-        var full_hash = window.location.hash.replace(/^#\|?/, '');
-        if (old_hash){
-            var newHash = window.location.hash.replace(old_hash, hash);
-        } else {
-            var newHash = window.location.hash + '|' + hash;
-        }
-        newHash = '#' + newHash.replace('||', '').replace(/^#?\|?|\|$/g, '');
-        window.location.hash = newHash;
-    },
-    addHashchange: MaSha.LocationHandler.prototype.addHashchange,
-    getHashPart: function() {
-        var parts = window.location.hash.replace(/^#\|?/, '').split(/\||%7C/);
-        var self_part = null;
-        for (var i=0; i< parts.length; i++){
-            if (parts[i].substr(0, this.prefix.length + 1) == this.prefix + '='){
-                return parts[i];
-            }
-        }
-        return '';
-    },
-    getHash: function() {
-        return this.getHashPart().replace(this.prefix, 'sel');
-    }
-};
-
-
-var MultiMaSha = function(elements, getPrefix, options){
-
-  getPrefix = getPrefix || function(element){
-      return element.id;
-  }
-
-  for (var i=0; i< elements.length; i++){
-      var element = elements[i];
-      var prefix = getPrefix(element);
-
-      if (prefix) {
-          var initOptions = extend({}, options || {}, {
-              'selectable': element,
-              'location': new MultiLocationHandler(prefix)
-          });
-          
-          new MaSha(initOptions);
-      }
-  }
-}
-
 
 /*
  * Exposing
@@ -1273,7 +1210,6 @@ if (window.jQuery){
         return new MaSha(options);
     };
 }
-window.MultiMaSha = MultiMaSha;
 
 
 /*
