@@ -248,17 +248,16 @@ MaSha.prototype = {
             }
         }
         return _count;
-    }, 
+    },
 
+    /*
+     * Reads initial selections from data and adds the decorations
+     */
     layout: function(){
-        /*
-         * Reads Hash from URL and marks texts
-         */
-        var hashAr = this.data;
-        if (!hashAr){ return; }
+        if (!this.data){ return; }
     
-        for (var i=0; i < hashAr.length; i++) {
-            this.deserializeSelection(hashAr[i]);
+        for (var i=0; i < this.data.length; i++) {
+            this.deserializeSelection(this.data[i]);
         }
     },
 
