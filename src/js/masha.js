@@ -25,7 +25,6 @@ LocationHandler.prototype = {
 var MaSha = function(options) {
     options = options || {};
 
-    if ('enable_haschange' in options){ options.enableHaschange = options.enable_haschange}
     if ('is_block' in options){ options.isBlock = options.is_block}
 
     this.options = extend({}, MaSha.defaultOptions, options);
@@ -50,7 +49,6 @@ MaSha.defaultOptions = {
     'ignored': null,
     'location': new LocationHandler(),
     'validate': false,
-    'enableHaschange': false,
     'isBlock': function(el){
       return el.nodeName == 'BR' || inArray(getCompiledStyle(el, 'display'),
                                                ['inline', 'none']) == -1;
@@ -94,19 +92,6 @@ MaSha.prototype = {
 
             this_.addSelection();
             this_.updateHash();
-        }
-
-        if(this.options.enableHaschange){
-            this.options.location.addHashchange(function(){
-                if(this_.lastHash != this_.options.location.getHash()){
-                    var numclasses = [];
-                    for(var k in this_.ranges) {
-                        numclasses.push(k);
-                    }
-                    this_.deleteSelections(numclasses);
-                    this_.readHash();
-                }
-            });
         }
 
         this.readHash();
