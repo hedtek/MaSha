@@ -731,19 +731,6 @@ MaSha.prototype = {
             }
         });
 
-
-
-
-
-        addEvent(closer, 'click', function(e){
-            preventDefault(e);
-            this_.deleteSelections([class_name]);
-            this_.updateHash();
-            
-            if (this_.options.onUnmark){
-                this_.options.onUnmark.call(this_);
-            }
-        });
         wrappers[wrappers.length-1].appendChild(closer_span);
     
         this.counter++;
