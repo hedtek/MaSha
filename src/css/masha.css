@@ -95,10 +95,10 @@
 .user_selection a.txtsel_close, .user_selection_true a.txtsel_close {
     display:inline-block;
     }
-.user_selection .closewrap, .user_selection_true .closewrap {
+.user_selection .anchor, .user_selection_true .anchor {
     display:inline-block;
     }
-.user_selection a.txtsel_close, .user_selection_true a.txtsel_close {
+.user_selection .anchor, .user_selection_true .anchor {
     display: inline-block;
     width: 1em;
     height: 1em;
@@ -107,7 +107,7 @@
     margin-left: 0.2em;
     vertical-align: text-bottom;
     }
-.user_selection a.txtsel_close:hover, .user_selection_true a.txtsel_close:hover {
+.user_selection .anchor:hover, .user_selection_true .anchor:hover {
 
 }
         

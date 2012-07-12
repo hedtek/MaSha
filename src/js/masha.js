@@ -197,8 +197,8 @@ MaSha.prototype = {
         for(var i=numclasses.length; i--;){
             var numclass = numclasses[i];
             var spans = byClassName(this.selectable, numclass);
-            var closewrap = firstWithClass(spans[spans.length-1], 'closewrap');
-            closewrap.parentNode.removeChild(closewrap);
+            var anchor = firstWithClass(spans[spans.length-1], 'anchor');
+            anchor.parentNode.removeChild(anchor);
 
             this.removeTextSelection(spans);
             delete this.ranges[numclass];
@@ -710,24 +710,20 @@ MaSha.prototype = {
         var timeout_hover=false;
         var this_ = this;
 
-        var closer = document.createElement('a');
-        closer.className = 'txtsel_close';
-        closer.href = '#';
-        var closer_span = document.createElement('span');
-        closer_span.className = 'closewrap';
-        closer_span.appendChild(closer);
+        var anchor_span = document.createElement('span');
+        anchor_span.className = 'anchor';
 
         // Add highlight on mouse over on anchor
         var wrappers = byClassName(this.selectable, class_name);
-        addEvent(closer_span, 'mouseover', function(){
+        addEvent(anchor_span, 'mouseover', function(){
             this_.highlightSelection(class_name);
         });
 
-        addEvent(closer_span, 'mouseout', function(){
+        addEvent(anchor_span, 'mouseout', function(){
             this_.unhighlightSelection(class_name);
         });
 
-        wrappers[wrappers.length-1].appendChild(closer_span);
+        wrappers[wrappers.length-1].appendChild(anchor_span);
     
         this.counter++;
         window.getSelection().removeAllRanges();
@@ -743,7 +739,7 @@ MaSha.prototype = {
     unhighlightSelection: function(class_name){
         var wrappers = byClassName(this.selectable, class_name);
         for (var i=wrappers.length;i--;){
-            removeClass(    wrappers[i], 'highlight');
+            removeClass(wrappers[i], 'highlight');
         }
     },
 
