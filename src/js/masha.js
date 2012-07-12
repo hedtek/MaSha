@@ -53,7 +53,7 @@ MaSha.defaultOptions = {
     'selectMessage': null,
     'location': new LocationHandler(),
     'validate': false,
-    'enableHaschange': true,
+    'enableHaschange': false,
     'onMark': null,
     'onUnmark': null,
     'onHashRead': function(){
@@ -789,36 +789,31 @@ MaSha.prototype = {
         var timeout_hover=false;
         var this_ = this;
 
-        var wrappers = byClassName(this.selectable, class_name);
-        for (var i=wrappers.length;i--;){
-            addEvent(wrappers[i], 'mouseover', function(){
-                for (var i=wrappers.length;i--;){
-                    addClass(wrappers[i], 'hover');
-                }
-                window.clearTimeout(timeout_hover);
-            });
-            addEvent(wrappers[i], 'mouseout', function(e){
-                // mouseleave
-                var t = e.relatedTarget;
-                while (t && t.parentNode && t.className != this.className){
-                    t = t.parentNode;
-                }
-                if (!t || t.className != this.className){
-                    timeout_hover = window.setTimeout(function(){ 
-                        for (var i=wrappers.length;i--;){
-                            removeClass(wrappers[i], 'hover');
-                        }
-                    }, 2000);
-                }
-            });
-        }
-
         var closer = document.createElement('a');
         closer.className = 'txtsel_close';
         closer.href = '#';
         var closer_span = document.createElement('span');
         closer_span.className = 'closewrap';
         closer_span.appendChild(closer);
+
+        // Add highlight on mouse over on anchor
+        var wrappers = byClassName(this.selectable, class_name);
+        addEvent(closer_span, 'mouseover', function(){
+                for (var i=wrappers.length;i--;){
+                    addClass(wrappers[i], 'highlight');
+                }
+        });
+
+        addEvent(closer_span, 'mouseout', function(){
+            for (var i=wrappers.length;i--;){
+                removeClass(wrappers[i], 'highlight');
+            }
+        });
+
+
+
+
+
         addEvent(closer, 'click', function(e){
             preventDefault(e);
             this_.deleteSelections([class_name]);

@@ -86,9 +86,12 @@
             }
 
 .user_selection, .user_selection_true {
-    background: #e6e6e6;
     padding: 2px 0;
     }
+
+.highlight{
+    background: #e6e6e6;
+}
 .user_selection a.txtsel_close, .user_selection_true a.txtsel_close {
     display:inline-block;
     }
