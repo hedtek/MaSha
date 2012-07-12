@@ -106,14 +106,7 @@ MaSha.prototype = {
         });
 
         this.afterSelectHandler = function(){
-            var regexp = new RegExp(this_.options.regexp, 'g');
-            var text = window.getSelection().toString();
-
-            if (text == '' || !regexp.test(text)) return;
-
-            if (!this_.rangeIsSelectable()){
-                return;
-            }
+            if (!this_.getSelection()) return;
 
             this_.addSelection();
             this_.updateHash();
@@ -659,6 +652,19 @@ MaSha.prototype = {
             range.setEnd(ec, eo);
         }
         return range;
+    },
+
+    getSelection: function(){
+        var regexp = new RegExp(this.options.regexp, 'g');
+        var text = window.getSelection().toString();
+
+        if (text == '' || !regexp.test(text)) return;
+
+        if (!this.rangeIsSelectable()){
+            return;
+        }
+
+        return text;
     },
 
     addSelection: function(range) {
