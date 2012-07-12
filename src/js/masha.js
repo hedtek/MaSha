@@ -22,7 +22,7 @@ LocationHandler.prototype = {
     }
 };
 
-var MaSha = function(options) {
+var MaSha = function(data, options) {
     options = options || {};
 
     if ('is_block' in options){ options.isBlock = options.is_block}

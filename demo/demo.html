@@ -26,8 +26,25 @@
     </style>
 
     <script>
+        function splittedHash(data){
+            var hash = data;
+            if (!hash) return null;
+
+            //
+            var pair = '';
+            if(! /^(?:\d+\:\d+(?:\:[^:;]*)?\,|%2C\d+\:\d+(?:\:[^:;]*)?;)*\d+\:\d+(?:\:[^:;]*)?\,|%2C\d+\:\d+(?:\:[^:;]*)?$/.test(hash)) return null;
+
+            return hash.split(';');
+        }
+
     function init_masha(){
-        MaSha.instance = new MaSha({'select_message': 'upmsg-selectable',
+        var data = "5:1:Orm,5:36:lln;6:11:n3r,6:69:unr;8:1:Orm,8:69:unr;2:11:n3r,2:60:r2y;7:28:4uw,7:53:Hyw;9:1:O,9:1:O";
+
+        console.log(data);
+        data = splittedHash(data);
+        console.log(data);
+
+        MaSha.instance = new MaSha(data, {'select_message': 'upmsg-selectable',
                                     'ignored': '.ignored',
                                     'validate': true});
     }
