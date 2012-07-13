@@ -44,9 +44,7 @@
         data = splittedHash(data);
         console.log(data);
 
-        MaSha.instance = new MaSha(data, {'select_message': 'upmsg-selectable',
-                                    'ignored': '.ignored',
-                                    'validate': true});
+        MaSha.instance = new MaSha(data, {'ignored': '.ignored', 'validate': true});
     }
     if (window.addEventListener){
         window.addEventListener('load', init_masha, false);
@@ -81,12 +79,6 @@ This text is completely ignored by MaSha. You can't select it because, may be, i
 </span>
 </p>
 </div>
-<div id="upmsg-selectable">
-    <div class="upmsg-selectable-inner">
-        <img src="../src/img/textselect/upmsg_arrow.png" alt="">
-        <p>Вы можете отметить интересные вам фрагменты текста, которые будут доступны по уникальной ссылке в адресной строке браузера.</p>
-        <a href="#" class="upmsg_closebtn"></a>
-    </div>
-</div>
+
 </body>
 </html>
