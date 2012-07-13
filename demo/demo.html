@@ -37,6 +37,13 @@
             return hash.split(';');
         }
 
+        function addEvent(elem, type, fn){
+            if (elem.addEventListener) {
+                elem.addEventListener(type, fn, false);
+            } else if (elem.attachEvent) {
+                elem.attachEvent("on" + type, fn);
+            }
+        }
     function init_masha(){
         var data = "5:1:Orm,5:36:lln;6:11:n3r,6:69:unr;8:1:Orm,8:69:unr;2:11:n3r,2:60:r2y;7:28:4uw,7:53:Hyw;9:1:O,9:1:O";
 
@@ -47,6 +54,24 @@
         MaSha.instance = new MaSha(data, {'ignored': '.ignored', 'validate': true});
 
         MaSha.instance.init();
+
+        afterSelectHandler = function(){
+            if (!MaSha.instance.getSelection()) return;
+            MaSha.instance.addSelection();
+        }
+
+        selectable_div = document.getElementById("selectable-content");
+
+        /*
+         * Handler for Mouse up on selection
+         */
+        addEvent(selectable_div, 'mouseup', function(e) {
+            window.setTimeout(function(){
+                this.afterSelectHandler();
+            }, 1);
+        });
+
+
     }
     if (window.addEventListener){
         window.addEventListener('load', init_masha, false);
