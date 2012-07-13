@@ -45,6 +45,8 @@
         console.log(data);
 
         MaSha.instance = new MaSha(data, {'ignored': '.ignored', 'validate': true});
+
+        MaSha.instance.init();
     }
     if (window.addEventListener){
         window.addEventListener('load', init_masha, false);
