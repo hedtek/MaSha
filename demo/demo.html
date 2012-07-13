@@ -51,9 +51,9 @@
         data = splittedHash(data);
         console.log(data);
 
-        MaSha.instance = new MaSha(data, {'ignored': '.ignored', 'validate': true});
+        MaSha.instance = new MaSha({'ignored': '.ignored', 'validate': true});
 
-        MaSha.instance.init();
+        MaSha.instance.init(data);
 
         afterSelectHandler = function(){
             if (!MaSha.instance.getSelection()) return;
