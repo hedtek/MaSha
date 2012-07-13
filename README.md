@@ -1,6 +1,6 @@
 # Textselect::Rails
 
-Wrapper for a simplified version of MaSha JS library (https://github.com/SmartTeleMax/MaSha).
+Wrapper for a simplified version of the MaSha JS library (https://github.com/SmartTeleMax/MaSha).
 
 ## Installation
 

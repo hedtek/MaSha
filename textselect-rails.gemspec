@@ -2,11 +2,11 @@
 require File.expand_path('../lib/textselect-rails/version', __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.authors       = ["Daniel Ghilea"]
+  gem.authors       = ["Daniel Ghilea", "Hedtek"]
   gem.email         = ["danny@hedtek.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
-  gem.homepage      = ""
+  gem.description   = %q{Wrapper for a simplified version of the MaSha JS library (https://github.com/SmartTeleMax/MaSha).}
+  gem.summary       = %q{Wrapper for a simplified version of the MaSha JS library (https://github.com/SmartTeleMax/MaSha).}
+  gem.homepage      = "https://github.com/ghilead/MaSha"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
