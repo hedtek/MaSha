@@ -57,7 +57,29 @@
 
         afterSelectHandler = function(){
             if (!MaSha.instance.getSelection()) return;
-            MaSha.instance.addSelection();
+            var anchor_span = MaSha.instance.addSelection();
+            addEventsOnAnchor(anchor_span);
+        }
+
+        addEventsOnAnchor = function(anchor_span){
+            var className = "";
+            var classes = anchor_span.parentNode.getAttribute("class").split(' ');
+
+            for (var index in classes){
+                if (classes[index].indexOf("num") === 0){
+                    console.log(classes[index]);
+                    className = classes[index];
+                }
+            }
+
+            // Add highlight on mouse over on anchor
+            addEvent(anchor_span, 'mouseover', function(){
+                MaSha.instance.highlightSelection(className);
+            });
+
+            addEvent(anchor_span, 'mouseout', function(){
+                MaSha.instance.unhighlightSelection(className);
+            });
         }
 
         selectable_div = document.getElementById("selectable-content");
