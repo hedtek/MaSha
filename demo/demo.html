@@ -56,8 +56,9 @@
         MaSha.instance.init(data);
 
         afterSelectHandler = function(){
-            if (!MaSha.instance.getSelection()) return;
-            var anchor_span = MaSha.instance.addSelection();
+            var currentSelection = MaSha.instance.getSelection();
+            if (! currentSelection) return;
+            var anchor_span = MaSha.instance.addSelection(currentSelection.location);
             addEventsOnAnchor(anchor_span);
         }
 
