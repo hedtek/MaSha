@@ -64,10 +64,11 @@
 
         addEventsOnAnchor = function(anchor_span){
             var className = "";
-            var classes = anchor_span.getAttribute("class").split(' ');
+            var classes = anchor_span.parentNode.getAttribute("class").split(' ');
 
             for (var index in classes){
                 if (classes[index].indexOf("num") === 0){
+                    console.log(classes[index]);
                     className = classes[index];
                 }
             }

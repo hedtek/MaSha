@@ -2,7 +2,7 @@
   background: #e6e6e6;
 }
 
-.anchor {
+.user_selection .anchor, .user_selection_true .anchor {
   display: inline-block;
   width: 1em;
   height: 1em;
