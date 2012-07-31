@@ -73,6 +73,9 @@
                 }
             }
 
+            // Add inside text in anchor
+            anchor_span.innerHTML = "a";
+
             // Add highlight on mouse over on anchor
             addEvent(anchor_span, 'mouseover', function(){
                 MaSha.instance.highlightSelection(className);
