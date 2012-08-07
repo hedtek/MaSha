@@ -53,7 +53,7 @@
 
         MaSha.instance = new MaSha({'ignored': '.ignored', 'validate': true});
 
-        MaSha.instance.init(data);
+        MaSha.instance.init({}, data);
 
         afterSelectHandler = function(){
             var currentSelection = MaSha.instance.getSelection();
