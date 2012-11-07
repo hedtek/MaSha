@@ -51,9 +51,11 @@
         data = splittedHash(data);
         console.log(data);
 
-        MaSha.instance = new MaSha({'ignored': '.ignored', 'validate': true});
+        MaSha.instance = new MaSha({'ignored': '.ignored'});
 
         MaSha.instance.init({}, data);
+
+        // MaSha.instance.addSelection("1:1:Wr3:1,1:3:3rW:1");
 
         afterSelectHandler = function(){
             var currentSelection = MaSha.instance.getSelection();
@@ -86,6 +88,13 @@
             });
         }
 
+
+        var anchor_span = MaSha.instance.addSelection("1:1,1:3");
+        this.addEventsOnAnchor(anchor_span);
+
+        anchor_span = MaSha.instance.addSelection("1:1,1:3");
+        this.addEventsOnAnchor(anchor_span);
+
         selectable_div = document.getElementById("selectable-content");
 
         /*
@@ -108,7 +117,12 @@
     
 </head>
 <body>
-<div id="selectable-content">
+<div id="selectable-content"><p>Odio fuga rerum. Occaecati neque culpa sit quasi reprehenderit itaque dolorem. Inventore explicabo voluptas est reiciendis enim consectetur. Qui aut illum quasi at. Sed assumenda asperiores.
+
+    Et commodi doloremque. Maiores quis nemo corporis doloremque. Qui perspiciatis quasi.
+
+    Qui harum ducimus deserunt. Dolorem sint explicabo nobis esse rerum repellat. Sint tempora delectus quo voluptatem aut id. Officiis debitis ut quis vero. Eos et sunt excepturi.
+    This is test. Adding selection for the whole first sentence was causing issues.</p>
 <p>Lorem ipsum do<b>l</b>or sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 <div class="ignored" style="float: left; width: 220px; background: #fee; border: 1px solid #f99; padding: 3px; margin: 3px;">
